@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive CSS & JS Demo</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+      background: #f8f8f8;
+    }
+
+    /* Part 1: Button hover effect */
+    #hoverBtn {
+      padding: 10px 20px;
+      background: #0077ff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    #hoverBtn:hover {
+      background: #0055cc;
+      transform: scale(1.1);
+    }
+
+    /* The box */
+    .box {
+      width: 100px;
+      height: 100px;
+      margin: 40px auto;
+      background: coral;
+      border-radius: 10px;
+      transition: transform 1s ease, background 1s ease;
+    }
+
+    /* Keyframes for moving box */
+    @keyframes moveRight {
+      from { transform: translateX(0); }
+      to { transform: translateX(200px) rotate(180deg); }
+    }
+
+    /* Animate class triggered by JS */
+    .animate {
+      animation: moveRight 2s forwards;
+      background: limegreen;
+    }
+  </style>
+</head>
+<body>
+  <h1>CSS & JavaScript Animation Project</h1>
+
+  <!-- Part 1: CSS Animations -->
+  <button id="hoverBtn">Hover Me</button>
+
+  <div class="box" id="animateBox"></div>
+
+  <!-- Part 2 & 3: JavaScript Functions -->
+  <button id="animateBtn">Animate Box</button>
+  <button id="resetBtn">Reset Box</button>
+
+  <script>
+    // --- Part 2: Functions, Scope, Parameters, Return Values ---
+
+    // Global variable
+    let clickCount = 0;
+
+    // Function with parameter & return value
+    function calculateDouble(num) {
+      return num * 2;
+    }
+
+    // Function to update box animation (local scope demo)
+    function animateBox(action) {
+      const box = document.getElementById("animateBox"); // local scope
+      if (action === "start") {
+        box.classList.add("animate");
+        console.log("Box animated. Double clicks so far: " + calculateDouble(clickCount));
+      } else if (action === "reset") {
+        box.classList.remove("animate");
+        console.log("Box reset.");
+      }
+    }
+
+    // --- Part 3: JS + CSS Integration ---
+    document.getElementById("animateBtn").addEventListener("click", function() {
+      clickCount++;
+      animateBox("start");
+    });
+
+    document.getElementById("resetBtn").addEventListener("click", function() {
+      animateBox("reset");
+    });
+  </script>
+</body>
+</html>
