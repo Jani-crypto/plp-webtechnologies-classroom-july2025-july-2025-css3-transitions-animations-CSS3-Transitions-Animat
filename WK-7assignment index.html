@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS & JavaScript Interactive Page</title>
+  <style>
+    /* === PART 1: CSS Transitions & Animations === */
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      animation: slideIn 1s ease-in-out forwards;
+      opacity: 0;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      background-color: #3498db;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+      transform: scale(1.05);
+    }
+
+    .box {
+      width: 100px;
+      height: 100px;
+      background-color: #2ecc71;
+      margin-top: 20px;
+      transition: transform 0.5s ease;
+    }
+
+    .animate-box {
+      animation: bounce 1s ease;
+    }
+
+    @keyframes bounce {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-50px); }
+      100% { transform: translateY(0); }
+    }
+
+    .modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.5);
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .modal.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+      pointer-events: auto;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Interactive Web Page</h1>
+
+  <button onclick="triggerBoxAnimation()">Bounce Box</button>
+  <button onclick="toggleModal()">Toggle Modal</button>
+  <button onclick="showResult()">Calculate Sum</button>
+
+  <div class="box" id="box"></div>
+
+  <div class="overlay" id="overlay" onclick="toggleModal()"></div>
+  <div class="modal" id="modal">
+    <h2>Hello!</h2>
+    <p>This is a sliding modal triggered with JavaScript.</p>
+    <button onclick="toggleModal()">Close</button>
+  </div>
+
+  <script>
+    // === PART 2 & 3: JavaScript Functions, Scope, and DOM Animation Control ===
+
+    // Function to trigger box bounce animation
+    function triggerBoxAnimation() {
+      const box = document.getElementById('box');
+      box.classList.remove('animate-box'); // Restart animation
+      void box.offsetWidth; // Trigger reflow to restart animation
+      box.classList.add('animate-box');
+    }
+
+    // Function to toggle modal visibility
+    function toggleModal() {
+      const modal = document.getElementById('modal');
+      const overlay = document.getElementById('overlay');
+      modal.classList.toggle('show');
+      overlay.classList.toggle('show');
+    }
+
+    // Function demonstrating parameters, return value, and local scope
+    function addNumbers(a, b) {
+      let result = a + b; // local scope
+      return result;
+    }
+
+    // Function that uses the above logic
+    function showResult() {
+      let x = 7;
+      let y = 5;
+      let sum = addNumbers(x, y);
+      alert(`The sum of ${x} + ${y} is ${sum}`);
+    }
+  </script>
+</body>
+</html>
